@@ -1,0 +1,51 @@
+<!-- write a program using promise.all(),
+inside an async/await to await 3 promises. 
+compare its result with the case where we await these promises one by one  -->
+
+<DOCTYPE html>
+  <html lang="eng">
+
+  <head>
+    <meta charset="UTF8">
+    <title>Promise.all VS Sequential await</title>
+  </head>
+
+  <body>
+    <h1> Compare: Promise.all vs Await One by One</h1>
+    <button onclick="runWithPromiseAll()">Run with Promise.all()</button>
+    <button onclick="runSequential()">Run with runSquential</button>
+
+    <script>
+      function createPromise(name, delay) {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve(`${name} resolved after ${delay}ms`)
+          }, delay);
+        });
+      }
+      async function runWithPromiseAll() {
+        const start = Date.now();
+
+        const p1 = createPromise("Promise 1", 1000);
+        const p2 = createPromise("Promise 2", 2000);
+        const p3 = createPromise("Promise 3", 3000);
+
+        const results = await Promise.all([p1, p2, p3]);
+
+        const end = Date.now();
+        alert("Promise.all() Results:\n" + results.join('\n') + `\nTime Taken: ${end - start}ms`);
+      }
+      async function runSequential() {
+        const start = Date.now();
+
+        const r1 = await createPromise("Promise 1", 1000);
+        const r2 = await createPromise("Promise 2", 2000);
+        const r3 = await createPromise("Promise 3", 3000);
+
+        const end = Date.now();
+        alert("Sequential Results:\n" + [r1, r2, r3].join('\n') + `\nTime Taken: ${end - start}ms`);
+      }
+    </script>
+  </body>
+
+  </html>
