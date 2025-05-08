@@ -1,0 +1,36 @@
+<!-- using the same Dynamic js loader with asyn/await -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Load JS with async/await</title>
+</head>
+
+<body>
+  <h1>Load External JS File using async/await</h1>
+  <button onclick="loadScript()">Load Script Button</button>
+
+  <script>
+    function loadJsFile(src) {
+      return new Promise((resolve, reject) => {
+        let script = document.createElement('script');
+        script.src = src;
+        script.onload = () => resolve("Script Loaded Successfully");
+        script.onerror = () => reject("Script has some Error");
+        document.head.appendChild(script);
+      });
+    }
+
+    async function loadScript() {
+      try {
+        const message = await loadJsFile("external.js");
+        alert(message);
+      } catch (error) {
+        alert("Error: " + error);
+      }
+    }
+  </script>
+</body>
+
+</html>
