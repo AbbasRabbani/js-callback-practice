@@ -1,0 +1,35 @@
+<!--create a promise which rejects after 3 seconds use an async/await to get its value and use try and catch to handle its error  -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF8">
+  <title>Reject promise with async/await</title>
+</head>
+
+<body>
+  <h1>Promise Rejection Handling with async/await</h1>
+  <button onclick="handlePromise()">Run Promise</button>
+  <script>
+    function createRejectingPromise() {
+      return new Promise((_, reject) => {
+        setTimeout(() => {
+          reject("Promise was rejected after 3 second !");
+        }, 3000);
+      });
+    }
+
+    async function handlePromise() {
+      try {
+        const result = await createRejectingPromise();
+        alert("success" + result);
+      } catch (error) {
+        alert("Error caught" + error);
+      }
+
+    }
+  </script>
+</body>
+
+</html>
