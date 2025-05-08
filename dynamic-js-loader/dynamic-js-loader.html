@@ -1,0 +1,37 @@
+<!-- Write a program to laid a JS file in the browser using Promises, use .then() to display an alert when the load is completed -->
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Load JS with Promise</title>
+</head>
+
+<body>
+  <h1>Load JS Exteranl file using Promise</h1>
+  <button onclick="loadScript()">Load Script Button</button>
+
+  <script>
+    function loadJsFile(src) {
+      return new Promise((resolve, reject) => {
+        let script = document.createElement('script');
+        script.src = src;
+        script.onload = () => resolve("Script Loaded Successfully");
+        script.onerror = () => reject("Script has some Error ");
+        document.head.appendChild(script);
+      });
+    }
+
+    function loadScript() {
+      loadJsFile("external.js")
+        .then(message => {
+          alert(message);
+        })
+        .catch(error => {
+          alert("Error" + error);
+        });
+    }
+  </script>
+</body>
+
+</html>
