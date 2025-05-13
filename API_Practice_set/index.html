@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Blog with GET and POST</title>
+</head>
+
+<body>
+  <h1>📰 Mini Blog</h1>
+
+  <h2>Load Posts (GET)</h2>
+  <button onclick="loadPosts()">Load Posts</button>
+  <ul id="postList"></ul>
+
+  <h2>Add New Post (POST)</h2>
+  <form onsubmit="submitPost(event)">
+    <input type="text" id="title" placeholder="Post Title" required><br><br>
+    <textarea id="body" placeholder="Post Body" required></textarea><br><br>
+    <button type="submit">Submit Post</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    function loadPosts() {
+      fetch('https://jsonplaceholder.typicode.com/posts?_limit=5') // limit to 5 posts
+        .then(res => res.json())
+        .then(posts => {
+          const list = document.getElementById('postList');
+          list.innerHTML = '';
+          posts.forEach(post => {
+            const li = document.createElement('li');
+            li.textContent = `${post.title}`;
+            list.appendChild(li);
+          });
+        })
+        .catch(err => alert("Error loading posts: " + err));
+    }
+
+    function submitPost(event) {
+      event.preventDefault(); // Prevent form reload
+
+      const title = document.getElementById('title').value;
+      const body = document.getElementById('body').value;
+
+      fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, body, userId: 1 })
+      })
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('result').innerText =
+            `✅ Post Created:\nTitle: ${data.title}\nBody: ${data.body}\nID: ${data.id}`;
+        })
+        .catch(err => alert("Error submitting post: " + err));
+    }
+  </script>
+</body>
+
+</html>
